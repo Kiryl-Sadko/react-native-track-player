@@ -95,7 +95,11 @@ class MusicService : HeadlessJsTaskService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startTask(getTaskConfig(intent))
-        startAndStopEmptyNotificationToAvoidANR()
+        try {
+            startAndStopEmptyNotificationToAvoidANR()
+        } catch (error: Exception) {
+            Timber.e("App tried to start a foreground MusicService when it was not allowed to do so.", error)
+        }
         return START_STICKY
     }
 
