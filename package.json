@@ -1,7 +1,7 @@
 {
-  "name": "react-native-track-player",
-  "version": "4.1.1",
-  "description": "A fully fledged audio module created for music apps",
+  "name": "@kiryl_sadko/react-native-track-player",
+  "version": "1.0.1",
+  "description": "Fork of react-native-track-player with custom changes",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
   "react-native": "src/index",

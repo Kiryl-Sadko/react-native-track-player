@@ -98,7 +98,7 @@ class MusicService : HeadlessJsTaskService() {
         try {
             startAndStopEmptyNotificationToAvoidANR()
         } catch (error: Exception) {
-            Timber.e("App tried to start a foreground MusicService when it was not allowed to do so.", error)
+            Timber.d("App tried to start a foreground MusicService when it was not allowed to do so.", error)
         }
         return START_STICKY
     }
