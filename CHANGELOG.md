@@ -1,5 +1,7 @@
 # Changelog
 
+## [5.0.2](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.1.0...v5.0.2) (2025-10-21)
+
 ## [5.0.1](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.0.1) (2025-10-21)
 
 ### Bug Fixes
