@@ -1,6 +1,6 @@
 {
   "name": "@kiryl_sadko/react-native-track-player",
-  "version": "5.0.1-alpha0",
+  "version": "5.1.0",
   "description": "Fork of react-native-track-player with custom changes",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

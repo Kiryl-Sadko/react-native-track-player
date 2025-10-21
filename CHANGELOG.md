@@ -1,5 +1,34 @@
 # Changelog
 
+## [5.1.0](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-10-21)
+
+### Bug Fixes
+
+* **ts:** export types from AudioMetadataReceivedEvent ([#2521](https://github.com/Kiryl-Sadko/react-native-track-player/issues/2521)) ([3e67ee0](https://github.com/Kiryl-Sadko/react-native-track-player/commit/3e67ee0ed1bf48bd7501360e8d9c3b943eccae59))
+* **ts:** resolve track resources in TrackPlayer.load ([#2522](https://github.com/Kiryl-Sadko/react-native-track-player/issues/2522)) ([359af5a](https://github.com/Kiryl-Sadko/react-native-track-player/commit/359af5a12d712d3b685530aed9b9625865a25d74))
+## [5.0.0-alpha0](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-08-12)
+
+### Features
+
+* **android, ios:** migrate the library to the new architecture ([5ce8412](https://github.com/Kiryl-Sadko/react-native-track-player/commit/5ce841270943a97b529ac1540c5c028413e0475b))
+* initial media3 functionality ([67220ad](https://github.com/Kiryl-Sadko/react-native-track-player/commit/67220adf37ac55cc27f8ef9233721137b995fd77))
+* onStartCommandIntentValid ([fdeb546](https://github.com/Kiryl-Sadko/react-native-track-player/commit/fdeb54647c7536d37dbaac9e4500399d80b6e84d))
+* onStartCommandIntentValid ([26a5826](https://github.com/Kiryl-Sadko/react-native-track-player/commit/26a5826c2214083b7106a44403e9fa29f9aed643))
+* **web:** migrate web to turbomodule architecture ([f3fc4d5](https://github.com/Kiryl-Sadko/react-native-track-player/commit/f3fc4d560154987dd7d341648b3ee6ac01972e15))
+
+### Bug Fixes
+
+* **android:** fix an issue causing remote events to not fire ([0001895](https://github.com/Kiryl-Sadko/react-native-track-player/commit/00018950f64f6a1bec814351d9bac20eccf22b28))
+* **android:** fix an issue with maxCacheSize option on android causing crashes ([349eff0](https://github.com/Kiryl-Sadko/react-native-track-player/commit/349eff03b930bc85da2a21c7e40bd16764989ef0))
+* **android:** prevent livestream failures by assigning a default user-agent for Media3 requests ([#2496](https://github.com/Kiryl-Sadko/react-native-track-player/issues/2496)) ([492d349](https://github.com/Kiryl-Sadko/react-native-track-player/commit/492d349095ddec9e55444b37f2e87ea42915d6aa))
+* **android:** resolve build errors in react-native@0.80.0 ([f40969b](https://github.com/Kiryl-Sadko/react-native-track-player/commit/f40969bccc138821a4cff312b15ea27692fdbd81))
+* broken events in bridgeless mode (React Native New Architecture) ([d918b8e](https://github.com/Kiryl-Sadko/react-native-track-player/commit/d918b8e11d4dd8e66ecae0f50baebb6d68d327d5))
+* catch currentTrack null ([2dc637f](https://github.com/Kiryl-Sadko/react-native-track-player/commit/2dc637fd06ac7ef2e0d507c567549341f4cfb7bd))
+* **ios:** add back errantly removed MetadataTimedReceived event ([6107f65](https://github.com/Kiryl-Sadko/react-native-track-player/commit/6107f659cbea0a347f18d857fd45a924f31a8b60))
+* **ios:** fix a build error by removing deprecated event listener ([b11736b](https://github.com/Kiryl-Sadko/react-native-track-player/commit/b11736b7f249698730845339c086b7dc722ca1ee))
+* **ios:** fix errors that occur when subscribing to the remote-play-pause event ([262d1a1](https://github.com/Kiryl-Sadko/react-native-track-player/commit/262d1a144188d337a666e08b1b3c9d5203ad2ec4))
+## [4.1.2](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-08-12)
+
 ## [5.0.0-alpha0](https://github.com/doublesymmetry/react-native-track-player/compare/v4.1.1...v5.0.0-alpha0) (2025-08-12)
 
 ### Features
