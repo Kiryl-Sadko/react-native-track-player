@@ -1,7 +1,7 @@
 {
-  "name": "react-native-track-player",
-  "version": "5.0.0-alpha0",
-  "description": "A fully fledged audio module created for music apps",
+  "name": "@kiryl_sadko/react-native-track-player",
+  "version": "5.0.1-alpha0",
+  "description": "Fork of react-native-track-player with custom changes",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -33,22 +33,6 @@
     "!**/__mocks__",
     "!**/.*"
   ],
-  "contributors": [
-    {
-      "name": "David Chavez",
-      "email": "david@dcvz.io",
-      "url": "http://dcvz.io"
-    },
-    {
-      "name": "Guilherme Chaguri",
-      "email": "guichaguri@gmail.com",
-      "url": "http://guichaguri.com"
-    },
-    {
-      "name": "Dustin Bahr",
-      "email": "dustin@curiousmedia.com"
-    }
-  ],
   "scripts": {
     "example": "yarn workspace react-native-track-player-example",
     "test": "jest",
@@ -79,10 +63,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/doublesymmetry/react-native-track-player.git"
+    "url": "https://github.com/Kiryl-Sadko/react-native-track-player.git"
   },
   "bugs": {
-    "url": "https://github.com/doublesymmetry/react-native-track-player/issues"
+    "url": "https://github.com/Kiryl-Sadko/react-native-track-player/issues"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -124,7 +108,6 @@
     "turbo": "^1.10.7",
     "typescript": "^5.8.3"
   },
-  "funding": "https://github.com/doublesymmetry/react-native-track-player?sponsor=1",
   "workspaces": [
     "example"
   ],
