@@ -1,12 +1,17 @@
 # Changelog
 
-## [5.1.0](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-10-21)
+## [5.0.1](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.0.1) (2025-10-21)
 
 ### Bug Fixes
 
 * **ts:** export types from AudioMetadataReceivedEvent ([#2521](https://github.com/Kiryl-Sadko/react-native-track-player/issues/2521)) ([3e67ee0](https://github.com/Kiryl-Sadko/react-native-track-player/commit/3e67ee0ed1bf48bd7501360e8d9c3b943eccae59))
 * **ts:** resolve track resources in TrackPlayer.load ([#2522](https://github.com/Kiryl-Sadko/react-native-track-player/issues/2522)) ([359af5a](https://github.com/Kiryl-Sadko/react-native-track-player/commit/359af5a12d712d3b685530aed9b9625865a25d74))
-## [5.0.0-alpha0](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-08-12)
+* **android:** always release the service `MediaLibrarySession` and assign a shared session ID so duplicate registration never triggers the “Session ID must be unique” crash ([#2485](https://github.com/doublesymmetry/react-native-track-player/issues/2485)).
+
+### Documentation
+
+* Added `AGENTS.md` with fork-specific contributor guidance and noted the fork’s scope in `README.md`.
+## [5.0.0-alpha0](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.0.1) (2025-08-12)
 
 ### Features
 
@@ -27,7 +32,7 @@
 * **ios:** add back errantly removed MetadataTimedReceived event ([6107f65](https://github.com/Kiryl-Sadko/react-native-track-player/commit/6107f659cbea0a347f18d857fd45a924f31a8b60))
 * **ios:** fix a build error by removing deprecated event listener ([b11736b](https://github.com/Kiryl-Sadko/react-native-track-player/commit/b11736b7f249698730845339c086b7dc722ca1ee))
 * **ios:** fix errors that occur when subscribing to the remote-play-pause event ([262d1a1](https://github.com/Kiryl-Sadko/react-native-track-player/commit/262d1a144188d337a666e08b1b3c9d5203ad2ec4))
-## [4.1.2](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.1.0) (2025-08-12)
+## [4.1.2](https://github.com/Kiryl-Sadko/react-native-track-player/compare/v5.0.0-alpha0...v5.0.1) (2025-08-12)
 
 ## [5.0.0-alpha0](https://github.com/doublesymmetry/react-native-track-player/compare/v4.1.1...v5.0.0-alpha0) (2025-08-12)
 

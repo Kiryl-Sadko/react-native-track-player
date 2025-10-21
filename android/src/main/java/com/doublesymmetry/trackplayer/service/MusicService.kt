@@ -13,13 +13,10 @@ import android.provider.Settings
 import android.view.KeyEvent
 import androidx.annotation.MainThread
 import androidx.annotation.OptIn
-import androidx.media.utils.MediaConstants
 import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.CacheBitmapLoader
-import androidx.media3.session.LibraryResult
-import androidx.media3.common.MediaItem
 import androidx.media3.common.Rating
 import androidx.media3.common.util.BitmapLoader
 import androidx.media3.exoplayer.ExoPlayer
@@ -46,12 +43,11 @@ import com.doublesymmetry.trackplayer.utils.BundleUtils.setRating
 import com.doublesymmetry.trackplayer.utils.CoilBitmapLoader
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.jstasks.HeadlessJsTaskConfig
-import com.google.common.collect.ImmutableList
-import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
@@ -63,6 +59,7 @@ class MusicService : HeadlessJsMediaService() {
     private val scope = MainScope()
     private lateinit var fakePlayer: ExoPlayer
     private lateinit var mediaSession: MediaLibrarySession
+    private var hasReleasedSessionResources: Boolean = false
     private var progressUpdateJob: Job? = null
     private var sessionCommands: SessionCommands? = null
     private var playerCommands: Player.Commands? = null
@@ -104,10 +101,12 @@ class MusicService : HeadlessJsMediaService() {
             data = Uri.parse("trackplayer://notification.click")
             action = Intent.ACTION_VIEW
         }
+        val uniqueSessionId = "TrackPlayer_${UUID.randomUUID()}"
         mediaSession = MediaLibrarySession.Builder(this, fakePlayer,
             InnerMediaSessionCallback()
         )
             .setBitmapLoader(CacheBitmapLoader(CoilBitmapLoader(this)))
+            .setId(uniqueSessionId)
             // https://github.com/androidx/media/issues/1218
             .setSessionActivity(
                 PendingIntent.getActivity(
@@ -118,6 +117,7 @@ class MusicService : HeadlessJsMediaService() {
                 )
             )
             .build()
+        hasReleasedSessionResources = false
         super.onCreate()
     }
 
@@ -717,7 +717,7 @@ class MusicService : HeadlessJsMediaService() {
         onUnbind(rootIntent)
         Timber.d("isInitialized = ${::player.isInitialized}, appKilledPlaybackBehavior = $appKilledPlaybackBehavior")
         if (!::player.isInitialized) {
-            mediaSession.release()
+            releaseMediaSessionResources()
             return
         }
 
@@ -728,7 +728,7 @@ class MusicService : HeadlessJsMediaService() {
             }
             AppKilledPlaybackBehavior.STOP_PLAYBACK_AND_REMOVE_NOTIFICATION -> {
                 Timber.d("Killing service - appKilledPlaybackBehavior = $appKilledPlaybackBehavior")
-                mediaSession.release()
+                releaseMediaSessionResources()
                 player.clear()
                 player.stop()
                 // HACK: the service first stops, then starts, then call onTaskRemove. Why system
@@ -794,12 +794,28 @@ class MusicService : HeadlessJsMediaService() {
     override fun onDestroy() {
         if (::player.isInitialized) {
             Timber.d("Releasing media session and destroying player")
-            mediaSession.release()
             player.destroy()
         }
+        releaseMediaSessionResources()
 
         progressUpdateJob?.cancel()
         super.onDestroy()
+    }
+
+    private fun releaseMediaSessionResources() {
+        if (hasReleasedSessionResources) {
+            return
+        }
+
+        if (this::mediaSession.isInitialized) {
+            mediaSession.release()
+        }
+
+        if (this::fakePlayer.isInitialized) {
+            fakePlayer.release()
+        }
+
+        hasReleasedSessionResources = true
     }
 
     fun onMediaKeyEvent(intent: Intent?): Boolean? {
