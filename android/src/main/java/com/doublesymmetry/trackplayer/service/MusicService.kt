@@ -89,36 +89,42 @@ class MusicService : HeadlessJsMediaService() {
 
     @ExperimentalCoroutinesApi
     override fun onCreate() {
-        Timber.plant(object : Timber.DebugTree() {
-            override fun createStackElementTag(element: StackTraceElement): String? {
-                return "RNTP-${element.className}:${element.methodName}"
+        try {
+            Timber.plant(object : Timber.DebugTree() {
+                override fun createStackElementTag(element: StackTraceElement): String? {
+                    return "RNTP-${element.className}:${element.methodName}"
+                }
+            })
+            fakePlayer = ExoPlayer.Builder(this).build()
+            val openAppIntent = packageManager.getLaunchIntentForPackage(packageName)?.apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                // Add the Uri data so apps can identify that it was a notification click
+                data = Uri.parse("trackplayer://notification.click")
+                action = Intent.ACTION_VIEW
             }
-        })
-        fakePlayer = ExoPlayer.Builder(this).build()
-        val openAppIntent = packageManager.getLaunchIntentForPackage(packageName)?.apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            // Add the Uri data so apps can identify that it was a notification click
-            data = Uri.parse("trackplayer://notification.click")
-            action = Intent.ACTION_VIEW
-        }
-        val uniqueSessionId = "TrackPlayer_${UUID.randomUUID()}"
-        mediaSession = MediaLibrarySession.Builder(this, fakePlayer,
-            InnerMediaSessionCallback()
-        )
-            .setBitmapLoader(CacheBitmapLoader(CoilBitmapLoader(this)))
-            .setId(uniqueSessionId)
-            // https://github.com/androidx/media/issues/1218
-            .setSessionActivity(
-                PendingIntent.getActivity(
-                    this,
-                    0,
-                    openAppIntent,
-                    getPendingIntentFlags()
-                )
+            val uniqueSessionId = "TrackPlayer_${UUID.randomUUID()}"
+            mediaSession = MediaLibrarySession.Builder(this, fakePlayer,
+                InnerMediaSessionCallback()
             )
-            .build()
-        hasReleasedSessionResources = false
-        super.onCreate()
+                .setBitmapLoader(CacheBitmapLoader(CoilBitmapLoader(this)))
+                .setId(uniqueSessionId)
+                // https://github.com/androidx/media/issues/1218
+                .setSessionActivity(
+                    PendingIntent.getActivity(
+                        this,
+                        0,
+                        openAppIntent,
+                        getPendingIntentFlags()
+                    )
+                )
+                .build()
+            hasReleasedSessionResources = false
+            super.onCreate()
+        } catch (e: Exception) {
+            // Handle any service initialization errors to prevent fatal crashes
+            Timber.e(e, "Failed to initialize MusicService - attempting graceful degradation")
+            // Don't rethrow - allow service to stay alive even if initialization partially failed
+        }
     }
 
     enum class AppKilledPlaybackBehavior(val string: String) {
@@ -709,7 +715,13 @@ class MusicService : HeadlessJsMediaService() {
 
     override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
         // https://github.com/androidx/media/issues/843#issuecomment-1860555950
-        super.onUpdateNotification(session, true)
+        try {
+            super.onUpdateNotification(session, true)
+        } catch (e: Exception) {
+            // Handle RemoteServiceException to prevent fatal crashes
+            // This can occur if startForeground() is not called within ~5 seconds after startForegroundService()
+            Timber.e(e, "Failed to update notification - ignoring to prevent crash")
+        }
     }
 
     @MainThread
